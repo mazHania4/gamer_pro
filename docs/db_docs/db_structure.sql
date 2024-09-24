@@ -62,6 +62,16 @@ CREATE TABLE product_mgmt.products (
     price NUMERIC(10,2) NOT NULL
 );
 
+CREATE TABLE product_mgmt.inventories (
+    product_id INTEGER REFERENCES product_mgmt.products(product_id) NOT NULL,
+    branch_id INTEGER REFERENCES branch_mgmt.branches(branch_id) NOT NULL,
+    amount INTEGER NOT NULL,
+    state VARCHAR(10) CHECK (state IN ('on display', 'in store')) DEFAULT 'in store',
+    location VARCHAR(255) NULL, --aile and shelve 
+    notes VARCHAR(150) NULL,
+    PRIMARY KEY (product_id, branch_id, state)
+);
+
 CREATE TYPE sales_mgmt.card_type AS ENUM ('none', 'common', 'gold', 'platinum', 'diamond');
 CREATE TABLE sales_mgmt.clients (
     nit INTEGER PRIMARY KEY CHECK (nit > 0 AND nit < 1000000000),
@@ -106,16 +116,6 @@ CREATE TABLE sales_mgmt.sale_items (
     PRIMARY KEY (sale_id, product_id)
 );
 
-CREATE TABLE product_mgmt.inventories (
-    product_id INTEGER REFERENCES product_mgmt.products(product_id) NOT NULL,
-    branch_id INTEGER REFERENCES branch_mgmt.branches(branch_id) NOT NULL,
-    amount INTEGER NOT NULL,
-    state VARCHAR(10) CHECK (state IN ('on display', 'in store')),
-    aisle INTEGER NOT NULL ,
-    shelve INTEGER,
-    notes VARCHAR(150),
-    PRIMARY KEY (branch_id, product_id)
-);
 
 
 

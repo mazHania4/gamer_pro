@@ -14,7 +14,6 @@ class Login_svc {
 
     public function validateLogin($username, $password, $role){
         $hash = hash('sha256', $password); 
-        echo $username . "-" . $hash . "-" . $role;
         $stmt = $this->pdo->prepare("SELECT * FROM branch_mgmt." . $role . " WHERE username = :username AND password = :password AND state = 'active'");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':password', $hash, PDO::PARAM_STR);
@@ -25,8 +24,6 @@ class Login_svc {
         
         return $user;
     }
-
-
 
 }
 
