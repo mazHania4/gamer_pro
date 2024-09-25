@@ -7,6 +7,9 @@ if (isset($_SESSION['username'])) {
         case 'storers':
             header('Location: /gamer_pro/ctrl/storers.php');
             break;
+        case 'cashiers':
+            header('Location: /gamer_pro/ctrl/cashiers.php');
+            break;
         default:
             header('Location: /gamer_pro/view/' . $_SESSION['role'] . '/main.php');
             break;

@@ -35,13 +35,13 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'storers')) {
                     <input list="productnames" name="product_id" id="product_id" class="form-control" placeholder="Nombre o id del producto">
                     <datalist name="productnames" id="productnames">
                         <?php 
-                    if (isset($_SESSION['product_names'])){
-                        $product_names = $_SESSION['product_names'];
-                        foreach ($product_names as $product_name) {
-                            echo '<option value="'.$product_name['id'].'">'.$product_name['name'].'</option>';
+                        if (isset($_SESSION['product_names'])){
+                            $product_names = $_SESSION['product_names'];
+                            foreach ($product_names as $product_name) {
+                                echo '<option value="'.$product_name['id'].'">'.$product_name['name'].'</option>';
+                            }
                         }
-                    }
-                    ?>
+                        ?>
                     </datalist>
                 </div>
                 <div class="col-md-3">                
@@ -95,8 +95,6 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'storers')) {
             </tbody>
         </table>
     </div>
-
-    
 
 
 

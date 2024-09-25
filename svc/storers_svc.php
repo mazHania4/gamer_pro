@@ -33,8 +33,12 @@ class Storers_svc {
         $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
         $stmt->bindParam(':location', $location, PDO::PARAM_STR);
         $stmt->bindParam(':notes', $notes, PDO::PARAM_STR);
-        $stmt->execute();
-        return true;
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 
 }

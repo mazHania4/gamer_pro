@@ -34,6 +34,7 @@ CREATE TABLE branch_mgmt.cashiers (
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
+    checkout_number INTEGER NOT NULL,
     state VARCHAR(8) CHECK (state IN ('active', 'inactive'))
 );
 
@@ -81,16 +82,25 @@ CREATE TABLE sales_mgmt.clients (
     points INTEGER DEFAULT 0
 );
 
+
 CREATE TABLE sales_mgmt.sales (
     sale_id SERIAL PRIMARY KEY,
     client_nit INTEGER REFERENCES sales_mgmt.clients(nit) NOT NULL ,
     cashier_id INTEGER REFERENCES branch_mgmt.cashiers(cashier_id) NOT NULL ,
     branch_id INTEGER REFERENCES branch_mgmt.branches(branch_id) NOT NULL ,
-    temp_discount NUMERIC(10,2),
-    point_discount NUMERIC(10,2),
+    temp_discount NUMERIC(10,2) DEFAULT 0,
+    point_discount NUMERIC(10,2) DEFAULT 0,
     checkout_number INTEGER NOT NULL,
     date TIMESTAMP DEFAULT NOW(),
-    total NUMERIC(10,2)
+    total NUMERIC(10,2) DEFAULT 0 --ya con descuentos
+);
+
+CREATE TABLE sales_mgmt.sale_items (
+    sale_id INTEGER REFERENCES sales_mgmt.sales(sale_id) NOT NULL,
+    product_id INTEGER REFERENCES product_mgmt.products(product_id) NOT NULL,
+    amount INTEGER NOT NULL,
+    unit_price NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (sale_id, product_id)
 );
 
 CREATE TABLE sales_mgmt.points_usage (
@@ -108,13 +118,7 @@ CREATE TABLE sales_mgmt.temp_discounts (
     final_date TIMESTAMP
 );
 
-CREATE TABLE sales_mgmt.sale_items (
-    sale_id INTEGER REFERENCES sales_mgmt.sales(sale_id) NOT NULL,
-    product_id INTEGER REFERENCES product_mgmt.products(product_id) NOT NULL,
-    amount INTEGER NOT NULL,
-    unit_price NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY (sale_id, product_id)
-);
+
 
 
 
@@ -136,6 +140,11 @@ GRANT sales_analyst TO gp_cashier;
 GRANT products_analyst TO gp_cashier;
 GRANT INSERT, UPDATE, TRIGGER ON sales_mgmt.sales, sales_mgmt.sale_items, sales_mgmt.clients TO gp_cashier;
 GRANT INSERT ON sales_mgmt.points_usage TO gp_cashier;
+GRANT USAGE ON SEQUENCE sales_mgmt.sales_sale_id_seq to gp_cashier;
+GRANT USAGE ON SEQUENCE sales_mgmt.points_usage_points_usage_id_seq to gp_cashier;
+GRANT USAGE ON SCHEMA branch_mgmt TO gp_cashier;
+GRANT SELECT ON branch_mgmt.cashiers TO gp_cashier;
+GRANT UPDATE ON product_mgmt.inventories TO gp_cashier;
 
 DROP USER IF EXISTS gp_storers;
 CREATE USER gp_storers WITH PASSWORD 'gp_storers_pass';

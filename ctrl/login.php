@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role;
             $_SESSION['branch'] = $user['branch_id'];
+            $_SESSION['user_id'] = $user['user_id'];
         } else {
             $_SESSION['error'] = "Usuario o contraseña incorrectos.";
         }

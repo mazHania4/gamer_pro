@@ -13,31 +13,31 @@ INSERT INTO branch_mgmt.admins(name, username, password, state) VALUES
 
 
 --CASHIERS
-INSERT INTO branch_mgmt.cashiers(branch_id, name, username, password, state) VALUES
-    (1, 'cashier1',         'cashier1', '6a79b51fec89db977e62d3b5aee3ea8b9de93cabf2446aae7d6f517db6d16178', 'active'), -- pass: cashier
-    (1, 'Aileen Pritani',   'Pritani_', 'cc690ddfa30148760bb86d3a2992bdd802e9cee55bd84b2674b0f8cc9ce4355b', 'active'), -- pass: blue_potato
-    (1, 'Mihai Benton',     'Mihai_ve', '650e9595236154547665929c8ff6c06a4e1f89bb63797649b3cfc5337d075be8', 'active'), -- pass: muffins
-    (1, 'Bell Mertz',       'mertz_',   '17bfb20e0f7b3a7ebd896e192d4d137efd5bd4f5bd5759ff36023aed3f792bba', 'active'), -- pass: Amir94
-    (1, 'Aniya Medhurst',   'anniya_M', '23c267883e7451541c151c0b66f6fbf90ff451f2e6707baccbb344c6f256ec23', 'active'), -- pass: Trystan91
-    (1, 'Kellen Rohan',     'Kel.Prsn', '366c1ab53781381b00b2316f0276c23170a3252b8825902cff6e2f275bce4ec9', 'active'), -- pass: Rogelio59
-    (1, 'Lexi Becker',      'Beckr44',  'd26cdc46e372a8f5c0b5eae54b00c3f3f98bcdd1cab881c4c62e32be6df8f50b', 'active'), -- pass: Cyril76
-    (1, 'Tressie Collins',  'Tres_s',   '2013f5bfb6f0a911ad711c8d9db0086bb1d6345f0afc3ee3ef913013895b1bc3', 'active'), -- pass: LondonMante32
-    (2, 'Ayden Dare',       'Dare.ayd', '5f9586436b4864554d11ee30d88081539bb91ebdfd04843b733ffd9d5da42872', 'active'), -- pass: Krystal_Bashirian37
-    (2, 'Nicolas Bukridge', 'Ni_Buk93', '71e53c554ca63ac953b0b97ea54bf91c3630c118acd82e34fe00b6bbcd4c835a', 'active'), -- pass: Jerad22
-    (2, 'Angelina Carroll', 'Carroll',  'c1d065a4dd8b4f74d5b7b19eb6508f41c51970637041e94517f7c83b28c3c306', 'active'), -- pass: Asia86
-    (2, 'Verna Lubowitz',   'Verna.wtz','fed5a1bfc7b59c96145089c5ae7f4333c1a78d4ffbb1d00ee26a71291526bf10', 'active'), -- pass: Jovanyey64
-    (2, 'Cory Hackett',     'Hack_co8', 'c1bf79d603cca8b0da6e94228ad3805d74a252194951f87fbc9a4f165791e363', 'active'), -- pass: Beattel85
-    (2, 'Donny Wisoky',     'Wisk38',   'bfc9601f779eb4a270449c214d75989c46bed313c72c8abf5645fa7ebbef4975', 'active'), -- pass: AntonOConner
-    (2, 'Remington Mann',   'Mann_re4', 'b8473abb692651f36d89c2c5d52b06f8ed7bfa763fd096e9cdde910bbaafa3b4', 'inactive'), -- pass: JessBrakus14
-    (2, 'Toby Moore',       'Tobyy49',  'fa3234cdc1528d2d6652630d1d500f958b57c8d97fc170974a857fb2784e6a03', 'active'), -- pass: Burley17
-    (3, 'Sonya Leannon',    'Leannon72','10baba723a94b7622f5384aa2ad0a642ade72e1b9e79e0332315344baf31d7f4', 'active'), -- pass: Sonyaa_
-    (3, 'Gennaro West',     'west_gen', '05100dfd002ca61d5c0fed99ead5799c0588d112d6d38c28913805020cbb4b7b', 'active'), -- pass: Towne63
-    (3, 'Lilian Nitzsche',  'Lili_ntz', 'd243b15c759c18f40a3885ae065cf67f3845e3dcc31c0d9676d69021e5e1fad3', 'active'), -- pass: Travis59
-    (3, 'Orpha Murray',     'Mray_O32', 'b56ad9d7372fedf9bea25159baec09b9ebebdf33872713203dc92dd7ba1e2b9f', 'inactive'), -- pass: William_Brakus
-    (3, 'Shana MacGyver',   'Sha_mg89', '0fe288962c869d21d665aeb7ef61bf0464d6ea2b93504a98f24c6fcc10034fd5', 'active'), -- pass: Demond14
-    (3, 'Callie West',      'Llie_wz',  '9de14bafded0f087b44f078201c8324b018073c914b12650650bec2a7332e85e', 'active'), -- pass: Brenda70
-    (3, 'Axel Hermiston',   'Axel_He29','0be7368acb9e3d79ae8a0534ba18b411bd3a3fae0d2d4f94007385f0a9db2c38', 'active'), -- pass: Maude29
-    (3, 'Celestino Mayer',  'key_mayer','cea70552116071b4ea769c41150f7f76c0e7673bfd6dc62453d507e41af9b529', 'active'); -- pass: tomate
+INSERT INTO branch_mgmt.cashiers(branch_id, name, username, password, state, checkout_number) VALUES
+    (1, 'cashier1',         'cashier1', '6a79b51fec89db977e62d3b5aee3ea8b9de93cabf2446aae7d6f517db6d16178', 'active', 1), -- pass: cashier
+    (1, 'Aileen Pritani',   'Pritani_', 'cc690ddfa30148760bb86d3a2992bdd802e9cee55bd84b2674b0f8cc9ce4355b', 'active', 3), -- pass: blue_potato
+    (1, 'Mihai Benton',     'Mihai_ve', '650e9595236154547665929c8ff6c06a4e1f89bb63797649b3cfc5337d075be8', 'active', 2), -- pass: muffins
+    (1, 'Bell Mertz',       'mertz_',   '17bfb20e0f7b3a7ebd896e192d4d137efd5bd4f5bd5759ff36023aed3f792bba', 'active', 5), -- pass: Amir94
+    (1, 'Aniya Medhurst',   'anniya_M', '23c267883e7451541c151c0b66f6fbf90ff451f2e6707baccbb344c6f256ec23', 'active', 4), -- pass: Trystan91
+    (1, 'Kellen Rohan',     'Kel.Prsn', '366c1ab53781381b00b2316f0276c23170a3252b8825902cff6e2f275bce4ec9', 'active', 6), -- pass: Rogelio59
+    (1, 'Lexi Becker',      'Beckr44',  'd26cdc46e372a8f5c0b5eae54b00c3f3f98bcdd1cab881c4c62e32be6df8f50b', 'active', 7), -- pass: Cyril76
+    (1, 'Tressie Collins',  'Tres_s',   '2013f5bfb6f0a911ad711c8d9db0086bb1d6345f0afc3ee3ef913013895b1bc3', 'active', 8), -- pass: LondonMante32
+    (2, 'Ayden Dare',       'Dare.ayd', '5f9586436b4864554d11ee30d88081539bb91ebdfd04843b733ffd9d5da42872', 'active', 3), -- pass: Krystal_Bashirian37
+    (2, 'Nicolas Bukridge', 'Ni_Buk93', '71e53c554ca63ac953b0b97ea54bf91c3630c118acd82e34fe00b6bbcd4c835a', 'active', 2), -- pass: Jerad22
+    (2, 'Angelina Carroll', 'Carroll',  'c1d065a4dd8b4f74d5b7b19eb6508f41c51970637041e94517f7c83b28c3c306', 'active', 1), -- pass: Asia86
+    (2, 'Verna Lubowitz',   'Verna.wtz','fed5a1bfc7b59c96145089c5ae7f4333c1a78d4ffbb1d00ee26a71291526bf10', 'active', 4), -- pass: Jovanyey64
+    (2, 'Cory Hackett',     'Hack_co8', 'c1bf79d603cca8b0da6e94228ad3805d74a252194951f87fbc9a4f165791e363', 'active', 7), -- pass: Beattel85
+    (2, 'Donny Wisoky',     'Wisk38',   'bfc9601f779eb4a270449c214d75989c46bed313c72c8abf5645fa7ebbef4975', 'active', 6), -- pass: AntonOConner
+    (2, 'Remington Mann',   'Mann_re4', 'b8473abb692651f36d89c2c5d52b06f8ed7bfa763fd096e9cdde910bbaafa3b4', 'inactive', 2), -- pass: JessBrakus14
+    (2, 'Toby Moore',       'Tobyy49',  'fa3234cdc1528d2d6652630d1d500f958b57c8d97fc170974a857fb2784e6a03', 'active', 5), -- pass: Burley17
+    (3, 'Sonya Leannon',    'Leannon72','10baba723a94b7622f5384aa2ad0a642ade72e1b9e79e0332315344baf31d7f4', 'active', 6), -- pass: Sonyaa_
+    (3, 'Gennaro West',     'west_gen', '05100dfd002ca61d5c0fed99ead5799c0588d112d6d38c28913805020cbb4b7b', 'active', 2), -- pass: Towne63
+    (3, 'Lilian Nitzsche',  'Lili_ntz', 'd243b15c759c18f40a3885ae065cf67f3845e3dcc31c0d9676d69021e5e1fad3', 'active', 1), -- pass: Travis59
+    (3, 'Orpha Murray',     'Mray_O32', 'b56ad9d7372fedf9bea25159baec09b9ebebdf33872713203dc92dd7ba1e2b9f', 'inactive', 4), -- pass: William_Brakus
+    (3, 'Shana MacGyver',   'Sha_mg89', '0fe288962c869d21d665aeb7ef61bf0464d6ea2b93504a98f24c6fcc10034fd5', 'active', 4), -- pass: Demond14
+    (3, 'Callie West',      'Llie_wz',  '9de14bafded0f087b44f078201c8324b018073c914b12650650bec2a7332e85e', 'active', 3), -- pass: Brenda70
+    (3, 'Axel Hermiston',   'Axel_He29','0be7368acb9e3d79ae8a0534ba18b411bd3a3fae0d2d4f94007385f0a9db2c38', 'active', 7), -- pass: Maude29
+    (3, 'Celestino Mayer',  'key_mayer','cea70552116071b4ea769c41150f7f76c0e7673bfd6dc62453d507e41af9b529', 'active', 8); -- pass: tomate
 
 
 -- STORERS

@@ -37,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($res){
         $_SESSION['success'] = "El inventario se ha actualizado adecuadamente";
     } else {
-        $_SESSION['error'] = "Ocurrió un problema al actualizar el inventario, intentelo de nuevo.";
+        $_SESSION['error'] = "Ocurrió un problema al actualizar el inventario, revise los datos e intentelo de nuevo.";
     }
+    
     header('Location: /gamer_pro/ctrl/redirect.php');
     exit();
 }
