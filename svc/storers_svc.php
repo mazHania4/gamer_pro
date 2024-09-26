@@ -12,6 +12,21 @@ class Storers_svc {
         $this->pdo = $this->db->getPDO("gp_storers", "gp_storers_pass");
     }
 
+    function transfer_inventory_to_display($branch_id, $prod_id, $amount, $location) {
+        try {
+
+            $stmt = $this->pdo->prepare("SELECT transfer_inventory_to_display(:branch, :prod, :amount, :location)");
+            $stmt->bindParam(':branch', $branch_id, PDO::PARAM_INT);
+            $stmt->bindParam(':prod', $prod_id, PDO::PARAM_INT);
+            $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+            $stmt->bindParam(':location', $location, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function getProducts($branch){
         $stmt = $this->pdo->prepare("SELECT * FROM get_branch_inventory(" . $branch . ");");
         $stmt->execute();

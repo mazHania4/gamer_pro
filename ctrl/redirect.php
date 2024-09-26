@@ -13,8 +13,11 @@ if (isset($_SESSION['username'])) {
         case 'admins':
             header('Location: /gamer_pro/view/admins/main.php');
             break;
+        case 'inventory_emp':
+            header('Location: /gamer_pro/ctrl/inventory.php');
+            break;
         default:
-            header('Location: /gamer_pro/view/' . $_SESSION['role'] . '/main.php');
+            header('Location: /gamer_pro/index.php#login');
             break;
     }
 } else {

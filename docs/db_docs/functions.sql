@@ -22,6 +22,44 @@ $$ LANGUAGE plpgsql;
 
 
 
+CREATE OR REPLACE FUNCTION transfer_inventory_to_display(
+    p_branch_id INTEGER,
+    p_product_id INTEGER,
+    p_amount INTEGER,
+    p_location VARCHAR
+)
+RETURNS VOID AS $$
+DECLARE
+    current_in_store INTEGER;
+    current_on_display INTEGER; 
+BEGIN
+    SELECT amount INTO current_in_store FROM product_mgmt.inventories
+    WHERE branch_id = p_branch_id AND product_id = p_product_id AND state = 'in store';
+
+    -- Validar que el producto exista en la sucursal
+    IF current_in_store IS NULL THEN
+        RAISE EXCEPTION 'No existe inventario en estado ''in store'' para el producto % en la sucursal %', p_product_id, p_branch_id;
+    -- Validar que haya cantidad suficiente
+    ELSIF p_amount > current_in_store THEN
+        RAISE EXCEPTION 'Cantidad insuficiente en estado ''in store''. Disponible: %, Solicitado: %', current_in_store, p_amount;
+    END IF;
+
+    --actualizar cantidad y ubicación 'on display'
+    UPDATE product_mgmt.inventories SET location = p_location, amount = amount + p_amount
+    WHERE branch_id = p_branch_id AND product_id = p_product_id AND state = 'on display';
+
+    -- Restar la cantidad transferida del estado 'in store'
+    UPDATE product_mgmt.inventories SET amount = current_in_store - p_amount
+    WHERE branch_id = p_branch_id AND product_id = p_product_id AND state = 'in store';
+
+    RAISE NOTICE 'Se ha transferido % unidades del producto % de ''in store'' a ''on display'' en la sucursal %.', p_amount, p_product_id, p_branch_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
 -- Select productos de una sucursal
 CREATE OR REPLACE FUNCTION get_branch_inventory(p_branch_id INTEGER)
 RETURNS TABLE (

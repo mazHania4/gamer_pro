@@ -17,24 +17,31 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'inventory_emp')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodega</title>
+    <title>Gamer Pro</title>
     <?php include "../components/head_imports.html"; ?>
 </head>
 <body>
     <?php include "../components/header.php"; ?>
 
+    <div class="container pt-5">
+        <?php include "../components/alerts.php"; ?>
+    </div>
+
+    <h1 class="display-6 mt-5 text-center">Trasladar productos en la sucursal</h1>
     <div class="container">
-        <table class="table">
+        <table class="table  mt-5 table-striped table-bordered border-info">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nombre del Producto</th>
+                    <th>ID</th>
+                    <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
-                    <th>Cantidad en Exhibición</th>
-                    <th>Cantidad en Almacén</th>
-                    <th>Ubicación en Exhibición</th>
-                    <th>Ubicación en Almacén</th>
+                    <th>En Exhibición</th>
+                    <th>En Almacén</th>
+                    <th>Ubicación Exhibición</th>
+                    <th>Ubicación Almacén</th>
+                    <th>Trasladar</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +51,7 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'inventory_emp')) {
                         <?php $i++; ?>
                         <tr>
                             <td><?php echo $i ?></td>
+                            <td><?php echo htmlspecialchars($product['product_id']); ?></td>
                             <td><?php echo htmlspecialchars($product['product_name']); ?></td>
                             <td><?php echo htmlspecialchars($product['product_description']); ?></td>
                             <td><?php echo htmlspecialchars($product['product_price']); ?></td>
@@ -52,10 +60,11 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'inventory_emp')) {
                             <td><?php echo htmlspecialchars($product['location_on_display']); ?></td>
                             <td><?php echo htmlspecialchars($product['location_in_store']); ?></td>
                             <td>
-                                <form method="POST" action="new_payment.php">
-                                    <input type="hidden" name="contract_id" value="<?php echo htmlspecialchars($contract['contract_id']); ?>">
-                                    <input type="hidden" name="payment_amount" value="<?php echo htmlspecialchars($contract['payments_amount']); ?>">
-                                    <button type="submit">Generar Pago</button>
+                                <form method="POST" action="../../ctrl/inventory.php">
+                                    <input class="form-control" type="number" name="amount" id="amount" placeholder="cantidad">
+                                    <input class="form-control" type="text" name="location" id="location" placeholder="location">
+                                    <input type="hidden" class="form-control" name="id" id="id" value="<?php echo htmlspecialchars($product['product_id']); ?>">
+                                    <button class="btn btn-info btn-sm" type="submit">Trasladar</button>
                                 </form>
                             </td>
                         </tr>
