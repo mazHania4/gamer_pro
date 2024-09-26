@@ -17,17 +17,18 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'cashiers')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caja</title>
+    <title>Gamer Pro</title>
     <?php include "../components/head_imports.html"; ?>
 </head>
 <body>
     <?php include "../components/header.php"; ?>
 
-    <div class="container bg-light p-5 border-bottom">
-
-        <div class="container bg-light-subtle">
-            <?php include "../components/alerts.php"; ?>
+    <div class="container bg-light p-4 border-bottom">
+        <?php include "../components/alerts.php"; ?>
+        
+        <div class="container my-5 py-3 bg-light-subtle">
             
+            <!-- REGISTRAR VENTA -->
             <h1 class="display-6 text-center">Nueva venta</h1>
 
             <datalist name="products" id="products">
@@ -52,6 +53,7 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'cashiers')) {
                 ?>
             </datalist>
             <form class="row g-3 p-3 " method="POST" action="../../ctrl/cashiers.php">
+                <input type="hidden" id="form_case" name="form_case" value="register_sale" required>
                 <div class="col-md-3">
                     <label for="client_nit" class="form-label px-2">Cliente</label>
                     <input list="clients" name="client_nit" id="client_nit" class="form-control" placeholder="Nombre o nit del cliente">
@@ -99,8 +101,32 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'cashiers')) {
             </form>
         </div>
 
-        <h1 class="display-6 text-center mt-4">Productos actuales en la sucursal</h1>
-        
+        <hr>
+
+        <!-- REGISTRAR CLIENTE -->
+        <div class="container my-5 py-3 bg-light-subtle">
+            <h1 class="display-6 text-center mt-4">Registrar Cliente</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form action="../../ctrl/cashiers.php" class="mb-5" method="POST">
+                        <input type="hidden" id="form_case" name="form_case" value="register_client" required>
+                        <div class="mb-3">
+                            <label for="nit" class="form-label">NIT</label>
+                            <input type="number" class="form-control" id="nit" name="nit" min="1" max="999999999" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" maxlength="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label">Número de Teléfono</label>
+                            <input type="number" class="form-control" id="phone_number" name="phone_number" min="1" max="99999999" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Agregar Cliente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     

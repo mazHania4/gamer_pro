@@ -48,6 +48,20 @@ class Cashiers_svc {
         }
     }
 
+    public function registerClient($nit, $name, $phone_number){
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO sales_mgmt.clients (nit, name, phone_number) VALUES (:nit, :name, :phone_number)");
+            $stmt->bindParam(':nit', $nit);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':phone_number', $phone_number);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+
+    }
+
     public function getProductNames($branch){
         $stmt = $this->pdo->prepare("SELECT * FROM get_branch_inventory(" . $branch . ");");
         $stmt->execute();

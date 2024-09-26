@@ -10,6 +10,9 @@ if (isset($_SESSION['username'])) {
         case 'cashiers':
             header('Location: /gamer_pro/ctrl/cashiers.php');
             break;
+        case 'admins':
+            header('Location: /gamer_pro/view/admins/main.php');
+            break;
         default:
             header('Location: /gamer_pro/view/' . $_SESSION['role'] . '/main.php');
             break;

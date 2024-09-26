@@ -80,7 +80,7 @@ BEGIN
     NEW.temp_discount := 0;
     NEW.point_discount := 0;
     NEW.total := 0;
-    NEW.date := CURRENT_DATE;
+    NEW.date := CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -244,4 +244,126 @@ BEGIN
     END IF;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+
+
+--REPORTES ADMINISTRADOR
+
+-- Historial de descuentos realizados en un intervalo de tiempo.
+CREATE OR REPLACE FUNCTION get_discount_history(start_date TIMESTAMP, end_date TIMESTAMP)
+RETURNS TABLE (
+    branch_id INTEGER,
+    branch_name VARCHAR,
+    sale_id INTEGER,
+    client_name VARCHAR,
+    total_discount NUMERIC(10,2),
+    sale_date TIMESTAMP
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        s.branch_id,                        
+        b.name AS branch_name,              
+        s.sale_id,                          
+        c.name AS client_name,                       
+        (s.temp_discount + s.point_discount) AS total_discount, -- Suma de descuentos de la venta
+        s.date AS sale_date                 
+    FROM sales_mgmt.sales s
+    JOIN sales_mgmt.clients c ON s.client_nit = c.nit  
+    JOIN branch_mgmt.branches b ON s.branch_id = b.branch_id
+    WHERE 
+        (s.temp_discount > 0 OR s.point_discount > 0) 
+        AND s.date BETWEEN start_date AND end_date 
+    ORDER BY 
+        s.date ASC;  -- Ordenar por fecha de venta
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+--Top 10 ventas más grandes en un intervalo de tiempo.
+CREATE OR REPLACE FUNCTION get_top_10_sales(start_date TIMESTAMP, end_date TIMESTAMP)
+RETURNS TABLE (
+    branch_id INTEGER,
+    branch_name VARCHAR,
+    sale_id INTEGER,
+    client_name VARCHAR,
+    cashier_name VARCHAR,
+    total_discount NUMERIC(10,2),
+    total NUMERIC(10,2),
+    sale_date TIMESTAMP
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        s.branch_id,                             
+        b.name AS branch_name,                   
+        s.sale_id,                               
+        c.name AS client_name,                   
+        ca.name AS cashier_name,                 
+        (s.temp_discount + s.point_discount) AS total_discount, -- Total descontado de la venta
+        s.total,
+        s.date AS sale_date                      
+    FROM sales_mgmt.sales s
+    JOIN branch_mgmt.branches b ON s.branch_id = b.branch_id 
+    JOIN sales_mgmt.clients c ON s.client_nit = c.nit        
+    JOIN branch_mgmt.cashiers ca ON s.cashier_id = ca.cashier_id 
+    WHERE s.date BETWEEN start_date AND end_date 
+    ORDER BY s.total DESC LIMIT 10;        
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--Top 2 sucursales que más dinero han ingresado
+CREATE OR REPLACE VIEW top_2_branches_revenue AS
+SELECT  s.branch_id,                           
+        b.name AS branch_name,                 
+        SUM(s.total) AS total_revenue          
+FROM sales_mgmt.sales s
+JOIN branch_mgmt.branches b ON s.branch_id = b.branch_id 
+GROUP BY s.branch_id, b.name                    -- Agrupar por ID y nombre de la sucursal?
+ORDER BY total_revenue DESC LIMIT 2;        
+-- Dar permiso sobre la vista al usuario administrador
+GRANT SELECT ON top_2_branches_revenue TO gp_admin;
+
+
+
+
+
+-- Top 10 artículos más vendidos
+CREATE OR REPLACE VIEW top_10_products_sales AS
+SELECT p.product_id,                              
+        p.name AS product_name,                    
+        SUM(si.amount) AS total_units_sold,        
+        SUM(si.amount * si.unit_price) AS total_revenue  --si cambia precio da problema?
+FROM sales_mgmt.sale_items si
+JOIN product_mgmt.products p ON si.product_id = p.product_id 
+GROUP BY p.product_id, p.name                        -- Agrupar por ID y nombre del producto?
+ORDER BY total_units_sold DESC LIMIT 10;         
+-- Dar permiso sobre la vista al usuario administrador
+GRANT SELECT ON top_10_products_sales TO gp_admin;     
+
+
+
+
+
+-- Top 10 clientes que más dinero han gastado
+CREATE OR REPLACE VIEW top_10_customers_spent AS
+SELECT 
+    c.nit, c.name AS client_name,                     
+    c.phone_number AS client_phone,                   
+    c.card AS card_type,                       
+    SUM(s.total) AS total_spent                
+FROM sales_mgmt.sales s
+JOIN sales_mgmt.clients c ON s.client_nit = c.nit 
+GROUP BY c.nit, c.name, c.phone_number, c.card              -- Agrupar por NIT, nombre, teléfono y tipo de tarjeta?
+ORDER BY total_spent DESC LIMIT 10;     
+-- Dar permiso sobre la vista al usuario administrador
+GRANT SELECT ON top_10_customers_spent TO gp_admin;
 

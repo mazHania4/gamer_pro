@@ -26,22 +26,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nit = $_POST['client_nit'];
-    $points = $_POST['used_points'];
-    $items = $_POST['items'];
+    $form_case = $_POST['form_case'];
+    if ($form_case == "register_sale"){
 
-    $cashier = $_SESSION['user_id'];
-    $branch = $_SESSION['branch'];
+        $nit = $_POST['client_nit'];
+        $points = $_POST['used_points'];
+        $items = $_POST['items'];
+        
+        $cashier = $_SESSION['user_id'];
+        $branch = $_SESSION['branch'];
+        
+        
+        $cashier_svc = new Cashiers_svc();
+        $res = $cashier_svc->insertSale($nit, $cashier, $points, $items);
+        
+        
+        if($res){
+            $_SESSION['success'] = "Se agregó la venta con exito! :)";
+        } else {
+            $_SESSION['error'] = "Ocurrió un problema! No se pudo agregar la venta, revise los datos e intentelo de nuevo.";
+        }
 
-    
-    $cashier_svc = new Cashiers_svc();
-    $res = $cashier_svc->insertSale($nit, $cashier, $points, $items);
+    } elseif ($form_case == "register_client") {
 
+        $nit = $_POST['nit'];
+        $name = $_POST['name'];
+        $phone_number = $_POST['phone_number'];
+        
+        $cashier_svc = new Cashiers_svc();
+        $res = $cashier_svc->registerClient($nit, $name, $phone_number);
 
-    if($res){
-        $_SESSION['success'] = "Se agregó la venta con exito! :)";
-    } else {
-        $_SESSION['error'] = "Ocurrió un problema! No se pudo agregar la venta, revise los datos e intentelo de nuevo.";
+        if($res){
+            $_SESSION['success'] = "Se registró el cliente con exito! :)";
+        } else {
+            $_SESSION['error'] = "Ocurrió un problema! No se pudo registrar el cliente, revise los datos e intentelo de nuevo.";
+        }    
     }
     
     header('Location: /gamer_pro/ctrl/redirect.php');

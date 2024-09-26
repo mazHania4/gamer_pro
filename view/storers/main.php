@@ -17,7 +17,7 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'storers')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodega</title>
+    <title>Gamer Pro</title>
     <?php include "../components/head_imports.html"; ?>
 </head>
 <body>
