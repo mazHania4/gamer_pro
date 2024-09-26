@@ -639,6 +639,92 @@ INSERT INTO  sales_mgmt.clients (nit, name, phone_number, card, points) VALUES
     (35357580,  'Xandra Wong',          54942689,   'gold',     45);   
 
 
+--VENTAS SUCURSAL 1
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (35305039, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (1, 114, 3);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (1, 115, 1);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (31723093, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (2, 126, 4);
+SELECT add_points(2);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (31723093, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (3, 126, 4);
+SELECT add_points(3);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (80726725, 3);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (4, 175, 5);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (30, 4);
+SELECT add_points(4);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (75064431, 4);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 147, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 216, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 97, 5);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 230, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (15, 5);
+SELECT add_points(5);
 
 
+-- VENTAS SUCURSAL 2
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (82938764, 10);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (6, 237, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (10, 6);
+SELECT add_points(6);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (89194607, 10);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 237, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 148, 7);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 15, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (10, 7);
+SELECT add_points(7);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (55984886, 11);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (8, 97, 3);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (8, 116, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (70, 8);
+SELECT add_points(8);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (10313848, 12);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (9, 238, 4);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (9, 96, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (9, 133, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (250, 9);
+SELECT add_points(9);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (64162911, 13);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (10, 234, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (10, 226, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (10, 177, 1);
+
+
+-- VENTAS SUCURSAL 3
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (89571700, 19);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (11, 134, 10);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (11, 129, 1);
+
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (48429059, 20);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (12, 141, 4);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (12, 195, 5);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (12, 215, 2);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (24171492, 21);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (13, 153, 7);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (70, 13);
+SELECT add_points(13);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (40051741, 22);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (14, 180, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (70, 14);
+SELECT add_points(14);
+
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (35357580, 21);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (15, 25, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (15, 11, 2);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (15, 161, 1);
+INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (15, 198, 1);
+INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (30, 15);
+SELECT add_points(15);
 

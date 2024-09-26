@@ -29,31 +29,31 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'admins')) {
         <div class="container my-5 py-3 bg-light-subtle">
             <h1 class="display-6 text-center">Top 10 artículos más vendidos</h1>
             <table class="table mt-5 table-striped table-bordered border-warning">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>ID Producto</th>
-                    <th>Nombre Producto</th>
-                    <th>Unidades vendidas</th>
-                    <th>Ingresos totales</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (isset($_SESSION['top_10_products_sales'])): ?>
-                    <?php $res_a = $_SESSION['top_10_products_sales']; $i = 0; ?>
-                    <?php foreach ($res_a as $res): ?>
-                        <?php $i++; ?>
-                        <tr>
-                            <td><?php echo $i ?></td>
-                            <td><?php echo htmlspecialchars($res['product_id']); ?></td>
-                            <td><?php echo htmlspecialchars($res['product_name']); ?></td>                            
-                            <td><?php echo htmlspecialchars($res['total_units_sold']); ?></td>
-                            <td><?php echo htmlspecialchars($res['total_revenue']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID Producto</th>
+                        <th>Nombre Producto</th>
+                        <th>Unidades vendidas</th>
+                        <th>Ingresos totales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (isset($_SESSION['top_10_products_sales'])): ?>
+                        <?php $res_a = $_SESSION['top_10_products_sales']; $i = 0; ?>
+                        <?php foreach ($res_a as $res): ?>
+                            <?php $i++; ?>
+                            <tr>
+                                <td><?php echo $i ?></td>
+                                <td><?php echo htmlspecialchars($res['product_id']); ?></td>
+                                <td><?php echo htmlspecialchars($res['product_name']); ?></td>                            
+                                <td><?php echo htmlspecialchars($res['total_units_sold']); ?></td>
+                                <td><?php echo htmlspecialchars($res['total_revenue']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
 
         
 

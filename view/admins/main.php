@@ -22,32 +22,110 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'admins')) {
 </head>
 <body>
     <?php include "../components/header.php"; ?>
-    
-    <?php include "../components/alerts.php"; ?>
+    <div class="container pt-5">
+        <?php include "../components/alerts.php"; ?>
+    </div>
 
     <!-- REGISTRAR EMPLEADO -->
     <section class="container bg-light p-4 my-3 border-bottom">
-        <div class="container my-5 py-3 bg-light-subtle">
+        <div class="row my-5 justify-content-center py-3 bg-light-subtle">
             <h1 class="display-6 text-center">Agregar empleado</h1>
-            
+            <div class="col-md-6">
+                <form action="../../ctrl/admins/admins.php" class="mb-5" method="POST">
+                    <div class="col mb-3">
+                        <label for="name" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="username" class="form-label">Nombre de Usuario:</label>
+                            <input type="text" class="form-control"  name="username" id="username" required>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" name="password" id="password" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="branch_id" class="form-label">ID de la Sucursal:</label>
+                            <input type="number" class="form-control" name="branch_id" id="branch_id" required>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="checkout_number" class="form-label">Número de Caja (solo para cajeros):</label>
+                            <input type="number" class="form-control" name="checkout_number" id="checkout_number">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee_type" class="form-label">Tipo de Empleado:</label>
+                        <select class="form-control" name="employee_type" id="employee_type" required>
+                            <option value="cashier">Cajero</option>
+                            <option value="storer">Bodeguero</option>
+                            <option value="inventory_emp">Empleado de Inventario</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-warning w-100" name="submit">Agregar Empleado</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
     <!-- MODIFICAR TARJETAS -->
     <section class="container bg-light p-4 my-3 border-bottom">
         <div class="container my-5 py-3 bg-light-subtle">
-            <h1 class="display-6 text-center">Gestionar tarjetas</h1>
-            
+            <h1 class="display-6 text-center">Mejorar tarjeta</h1>
+            <form action="../../ctrl/admins/cards.php" class="mb-5" method="POST">
+                <input type="hidden" class="form-control" name="form_case" id="form_case" value="search">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nit del usuario a consultar:</label>
+                    <input type="text" class="form-control" name="nit" id="nit" required>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-warning w-100" name="submit">Consultar</button>
+                </div>
+            </form>
+            <?php if (isset($_SESSION['card_client'])): ?>
+                <?php $res = $_SESSION['card_client']; ?>
+                <table class="table mt-5 table-striped table-bordered border-warning">
+                    <thead>
+                        <tr>
+                            <th>NIT</th>
+                            <th>Nombre</th>
+                            <th>Tarjeta</th>
+                            <th>Fecha modificación</th>
+                            <th>Gastos acumulados</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><?php echo htmlspecialchars($res['client_nit']); ?></td>
+                                <td><?php echo htmlspecialchars($res['client_name']); ?></td>                            
+                                <td><?php echo htmlspecialchars($res['current_card']); ?></td>
+                                <td><?php echo htmlspecialchars($res['last_card_update']); ?></td>
+                                <td><?php echo htmlspecialchars($res['total_spent']); ?></td>
+                            </tr>
+                    </tbody>
+                </table>
+                <form action="../../ctrl/admins/cards.php" class="mb-5" method="POST">
+                    <input type="hidden" class="form-control" name="form_case" id="form_case" value="update">
+                    <input type="hidden" class="form-control" name="nit" id="nit" value="<?php echo htmlspecialchars($res['client_nit']); ?>">
+                    <div>
+                        <button type="submit" class="btn btn-warning w-100" name="submit">Mejorar Tarjeta</button>
+                    </div>
+                </form>
+            <?php endif; ?>
         </div>
     </section>
 
     <!-- REPORTES -->
     <section class="container bg-light p-4 my-3 border-bottom">        
-        <div class="container my-5 py-3 bg-light-subtle">
+        <div class="container my-5 p-2 bg-light-subtle">
             <h1 class="display-6 text-center">Reportes</h1>
             
 
-        <div class="list-group">
+        <div class="list-group text-center px-5 mx-5 my-3">
             <button type="button" class="list-group-item list-group-item-action list-group-item-warning" data-bs-toggle="modal" data-bs-target="#discount_history_modal">
                 Historial de descuentos realizados en un intervalo de tiempo.</button>
             <button type="button" class="list-group-item list-group-item-action list-group-item-warning" data-bs-toggle="modal" data-bs-target="#top_10_sales_modal">

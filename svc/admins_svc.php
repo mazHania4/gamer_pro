@@ -11,7 +11,54 @@ class Admins_svc {
         $this->db = new DB();
         $this->pdo = $this->db->getPDO("gp_admin", "gp_admin_pass");
     }
+
+    public function upgrade_card($nit){
+        try{
+            $stmt = $this->pdo->prepare("SELECT upgrade_card(:nit)");
+            $stmt->bindParam(':nit', $nit, PDO::PARAM_INT);
+            $stmt->execute();  
+            return true;
+        } catch(Exception $e){
+            return false;
+        }
+    }
+
+    public function get_client_card_info($nit){
+        $stmt = $this->pdo->prepare("SELECT * FROM get_client_card_info(:nit)");
+        $stmt->bindParam(':nit', $nit, PDO::PARAM_INT);
+        $stmt->execute();
+        $res = $stmt->fetch();     
+        return $res;
+    }
     
+    public function newEmployee($employee_type, $branch_id, $name, $checkout_number, $username, $password) {
+        try{
+            $hash = hash('sha256', $password); 
+            if ($employee_type === 'cashier') {
+                $sql = "INSERT INTO branch_mgmt.cashiers (branch_id, name, username, password, checkout_number)
+                        VALUES (:branch_id, :name, :username, :password, :checkout_number)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->bindParam(':checkout_number', $checkout_number); // Para cajeros
+            } elseif ($employee_type === 'storer') {
+                $sql = "INSERT INTO branch_mgmt.storers (branch_id, name, username, password)
+                        VALUES (:branch_id, :name, :username, :password)";
+                $stmt = $this->pdo->prepare($sql);
+            } elseif ($employee_type === 'inventory_emp') {
+                $sql = "INSERT INTO branch_mgmt.inventory_emp (branch_id, name, username, password)
+                        VALUES (:branch_id, :name, :username, :password)";
+                $stmt = $this->pdo->prepare($sql);
+            }
+            $stmt->bindParam(':branch_id', $branch_id);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':password', $hash);
+
+            $stmt->execute();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
     public function get_discount_history($init_date, $final_date) {
         $stmt = $this->pdo->prepare("SELECT * FROM get_discount_history(:init_date, :final_date)");

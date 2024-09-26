@@ -249,6 +249,71 @@ $$ LANGUAGE plpgsql;
 
 
 
+CREATE OR REPLACE FUNCTION get_client_card_info(nit INTEGER)
+RETURNS TABLE (
+    client_nit INTEGER,
+    client_name VARCHAR,
+    current_card sales_mgmt.card_type,
+    last_card_update TIMESTAMP,
+    total_spent NUMERIC(10, 2)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        c.nit AS client_nit,
+        c.name AS client_name,
+        c.card AS current_card,
+        c.date_up_card AS last_card_update,
+        COALESCE(SUM(s.total), 0) AS total_spent
+    FROM sales_mgmt.clients c
+    LEFT JOIN sales_mgmt.sales s ON c.nit = s.client_nit AND s.date >= c.date_up_card 
+    WHERE c.nit = get_client_card_info.nit
+    GROUP BY c.nit, c.name, c.card, c.date_up_card;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION upgrade_card(_nit INTEGER)
+RETURNS VOID AS $$
+DECLARE
+    client_card sales_mgmt.card_type;   
+    total_spent NUMERIC(10, 2);          
+    current_level sales_mgmt.card_type; 
+BEGIN
+    SELECT card INTO client_card FROM sales_mgmt.clients WHERE nit = _nit;
+
+    -- Calcular el total gastado desde la última mejora de tarjeta
+    SELECT COALESCE(SUM(s.total), 0) INTO total_spent FROM sales_mgmt.sales s 
+    WHERE s.client_nit = _nit AND s.date >= (SELECT date_up_card FROM sales_mgmt.clients WHERE nit = _nit);
+
+    -- Determinar si cumple los requisitos para mejorar la tarjeta
+    IF client_card = 'none' THEN
+        current_level := 'common';
+    ELSIF client_card = 'common' AND total_spent >= 10000 THEN
+        current_level := 'gold';
+    ELSIF client_card = 'gold' AND total_spent >= 20000 THEN
+        current_level := 'platinum';
+    ELSIF client_card = 'platinum' AND total_spent >= 30000 THEN
+        current_level := 'diamond';
+    ELSE
+        RAISE EXCEPTION 'El cliente no cumple con los requisitos para mejorar su tarjeta.';
+    END IF;
+
+    -- Actualizar el nivel de tarjeta y la fecha de mejora
+    UPDATE sales_mgmt.clients SET card = current_level, date_up_card = NOW() WHERE nit = _nit;
+
+    RAISE NOTICE 'La tarjeta del cliente con NIT % ha sido actualizada a %.', _nit, current_level;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+
 --REPORTES ADMINISTRADOR
 
 -- Historial de descuentos realizados en un intervalo de tiempo.
@@ -366,4 +431,6 @@ GROUP BY c.nit, c.name, c.phone_number, c.card              -- Agrupar por NIT, 
 ORDER BY total_spent DESC LIMIT 10;     
 -- Dar permiso sobre la vista al usuario administrador
 GRANT SELECT ON top_10_customers_spent TO gp_admin;
+
+
 

@@ -33,8 +33,10 @@ class Cashiers_svc {
             }
 
             //aplica descuento de puntos
-            $stmt = $this->pdo->prepare("INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (:points, :sale_id)");
-            $stmt->execute(['points' => $points, 'sale_id' => $sale_id]);
+            if($points > 0){
+                $stmt = $this->pdo->prepare("INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (:points, :sale_id)");
+                $stmt->execute(['points' => $points, 'sale_id' => $sale_id]);
+            }
 
             //acumula puntos
             $stmt = $this->pdo->prepare("SELECT add_points(:sale_id)");

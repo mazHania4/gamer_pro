@@ -25,7 +25,7 @@ CREATE TABLE branch_mgmt.admins (
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    state VARCHAR(8) CHECK (state IN ('active', 'inactive'))
+    state VARCHAR(8) CHECK (state IN ('active', 'inactive')) DEFAULT 'active'
 );
 
 CREATE TABLE branch_mgmt.cashiers (
@@ -35,7 +35,7 @@ CREATE TABLE branch_mgmt.cashiers (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     checkout_number INTEGER NOT NULL,
-    state VARCHAR(8) CHECK (state IN ('active', 'inactive'))
+    state VARCHAR(8) CHECK (state IN ('active', 'inactive')) DEFAULT 'active'
 );
 
 CREATE TABLE branch_mgmt.storers (
@@ -44,7 +44,7 @@ CREATE TABLE branch_mgmt.storers (
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    state VARCHAR(8) CHECK (state IN ('active', 'inactive'))
+    state VARCHAR(8) CHECK (state IN ('active', 'inactive')) DEFAULT 'active'
 );
 
 CREATE TABLE branch_mgmt.inventory_emp (
@@ -53,7 +53,7 @@ CREATE TABLE branch_mgmt.inventory_emp (
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    state VARCHAR(8) CHECK (state IN ('active', 'inactive'))
+    state VARCHAR(8) CHECK (state IN ('active', 'inactive')) DEFAULT 'active'
 );
 
 CREATE TABLE product_mgmt.products (
@@ -79,6 +79,7 @@ CREATE TABLE sales_mgmt.clients (
     name VARCHAR(100) NOT NULL,
     phone_number INTEGER CHECK (phone_number > 0 AND phone_number < 100000000),
     card sales_mgmt.card_type DEFAULT 'none',
+    date_up_card TIMESTAMP DEFAULT NOW(),
     points INTEGER DEFAULT 0
 );
 
@@ -159,6 +160,9 @@ GRANT USAGE ON SCHEMA branch_mgmt TO gp_admin;
 GRANT SELECT ON ALL TABLES IN SCHEMA branch_mgmt TO gp_admin;
 GRANT INSERT, UPDATE, TRIGGER ON sales_mgmt.clients TO gp_admin;
 GRANT INSERT, UPDATE, TRIGGER ON branch_mgmt.cashiers, branch_mgmt.inventory_emp, branch_mgmt.storers TO gp_admin;
+GRANT USAGE ON SEQUENCE branch_mgmt.storers_storer_id_seq TO gp_admin;
+GRANT USAGE ON SEQUENCE branch_mgmt.cashiers_cashier_id_seq TO gp_admin;
+GRANT USAGE ON SEQUENCE branch_mgmt.inventory_emp_inventory_emp_id_seq TO gp_admin;
 
 DROP USER IF EXISTS gp_login;
 CREATE USER gp_login WITH PASSWORD 'gp_login_pass';
