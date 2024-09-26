@@ -221,6 +221,7 @@ if (!(isset($_SESSION['role']) && $_SESSION['role'] == 'cashiers')) {
             const rowTotal = parseFloat(totalCell.textContent) || 0;
             totalSale += rowTotal;
         });
+        totalSale = totalSale - document.querySelector('#used_points').value
         document.getElementById('total-sale').textContent = totalSale.toFixed(2);
         console.log(totalSale);
     }

@@ -644,7 +644,7 @@ INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (35305039, 2);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (1, 114, 3);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (1, 115, 1);
 
-INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (31723093, 2);
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (86912992, 2);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (2, 126, 4);
 SELECT add_points(2);
 
@@ -657,7 +657,7 @@ INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (4, 175, 
 INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (30, 4);
 SELECT add_points(4);
 
-INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (75064431, 4);
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (86912992, 4);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 147, 2);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 216, 1);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (5, 97, 5);
@@ -672,7 +672,7 @@ INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (6, 237, 
 INSERT INTO sales_mgmt.points_usage (points, sale_id) VALUES (10, 6);
 SELECT add_points(6);
 
-INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (89194607, 10);
+INSERT INTO sales_mgmt.sales (client_nit, cashier_id) VALUES (86912992, 10);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 237, 1);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 148, 7);
 INSERT INTO sales_mgmt.sale_items (sale_id, product_id, amount) VALUES (7, 15, 1);
